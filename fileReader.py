@@ -27,7 +27,13 @@ def load_csv(filename):
     times = []
     voltage = []
     for row in data:
-        times.append(float(row[0]))
-        voltage.append(float(row[1]))
+        try:
+            times.append(float(row[0]))
+        except ValueError:
+            times.append(float(-1))
+        try:
+            voltage.append(float(row[1]))
+        except ValueError:
+            voltage.append(float(-1))
 
     return times, voltage
