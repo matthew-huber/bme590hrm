@@ -30,10 +30,14 @@ def load_csv(filename):
         try:
             times.append(float(row[0]))
         except ValueError:
-            times.append(float(-1))
+            times.append('NAN')
         try:
             voltage.append(float(row[1]))
         except ValueError:
-            voltage.append(float(-1))
+            voltage.append('NAN')
 
     return times, voltage
+
+# def amend_missing_data(rawarray):
+#    for value in rawarray:
+#        if (value == -1)
