@@ -17,3 +17,10 @@ def create_and_fill_dict(times, voltage):
 def find_duration(times):
     max_time = max(times)
     return max_time
+
+
+def min_max_voltage(voltage):
+    min_voltage = min(voltage)
+    max_voltage = max(voltage)
+    min_max_voltages = (min_voltage, max_voltage)
+    return min_max_voltages
