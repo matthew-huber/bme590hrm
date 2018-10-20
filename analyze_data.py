@@ -10,7 +10,7 @@ def create_and_fill_dict(times, voltage):
                  }
 
     data_dict["duration"] = find_duration(times)
-
+    data_dict["min max"] = min_max_voltage(voltage)
     return data_dict
 
 
