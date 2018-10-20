@@ -13,6 +13,7 @@ def create_and_fill_dict(times, voltage):
 
     return data_dict
 
+
 def find_duration(times):
     max_time = max(times)
     return max_time
