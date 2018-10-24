@@ -26,6 +26,7 @@ def min_max_voltage(voltage):
     min_max_voltages = (min_voltage, max_voltage)
     return min_max_voltages
 
+
 def find_beat_times(times, voltage):
     interval = 0.5
     threshold = 0.75
@@ -55,6 +56,7 @@ def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     voltage_subarray = voltage[start_index:end_index]
     times_subarray = times[start_index:end_index]
     return times_subarray, voltage_subarray
+
 
 def beat_in_interval(times, voltage, end_interval, interval):
 
