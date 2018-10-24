@@ -32,8 +32,42 @@ def find_beat_times(times, voltage):
 
     beat_times = []
     for time in range(interval, max(times), interval/2):
-        beat_times = beat_times.append(beat_in_interval(times, voltage, time, interval))
+        beat_times.append(beat_in_interval(times, voltage, time, interval))
 
     beat_times = combine_double_beats(times, voltage, beat_times)
     return beat_times
 
+
+def beat_in_interval(times, voltage, end_interval, interval):
+    start_interval = end_interval - interval
+
+    end_index = max(times)
+
+    x = 1
+    for i in times:
+        if i <= start_interval:
+            start_index = x
+        if i >= end_interval and i < end_index:
+            end_index = x
+        x = x + 1
+
+    avg_subtracted_voltage = []
+    voltage_subarry = voltage[start_index:end_index]
+    times_subarray = times[start_index:end_index]
+    subarray_average = sum(voltage_subarry)/len(voltage_subarry)
+    for i in voltage_subarry:
+        avg_subtracted_voltage.append(i - subarray_average)
+
+    max_voltage = max(avg_subtracted_voltage)
+    normalized_voltage = []
+    for i in avg_subtracted_voltage:
+        normalized_voltage.append(i/max_voltage)
+
+    index_max_val = normalized_voltage.index(1)
+
+    QRS_time_region = 0.1
+
+    time_before_QRS = 0
+
+    for i in times_subarray:
+        if i < times[]
