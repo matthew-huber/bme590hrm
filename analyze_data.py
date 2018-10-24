@@ -58,19 +58,26 @@ def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     return times_subarray, voltage_subarray
 
 
+def process_voltage(voltage):
+    array_average = sum(voltage) / len(voltage)
+
+    avg_subtracted_voltage = []
+    for i in voltage:
+        avg_subtracted_voltage.append(i - array_average)
+
+    max_voltage = max(avg_subtracted_voltage)
+
+    normalized_voltage = []
+    for i in avg_subtracted_voltage:
+        normalized_voltage.append(i / max_voltage)
+
+    return normalized_voltage
+
 def beat_in_interval(times, voltage, end_interval, interval):
 
     times_subarray, voltage_subarray = extract_voltage_time_arrays(times, voltage, end_interval, interval)
 
-    avg_subtracted_voltage = []
-    subarray_average = sum(voltage_subarray)/len(voltage_subarray)
-    for i in voltage_subarray:
-        avg_subtracted_voltage.append(i - subarray_average)
-
-    max_voltage = max(avg_subtracted_voltage)
-    normalized_voltage = []
-    for i in avg_subtracted_voltage:
-        normalized_voltage.append(i/max_voltage)
+    
 
     index_max_val = normalized_voltage.index(1)
 
