@@ -41,14 +41,15 @@ def find_beat_times(times, voltage):
 def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     start_interval = end_interval - interval
 
-    end_index = max(times)
+    end_index = len(times)
 
     x = 1
+    start_index = 0
     for i in times:
-        if i <= start_interval:
+        if i < start_interval:
             start_index = x
-        if i >= end_interval and i < end_index:
-            end_index = x
+        if i > end_interval and x < end_index:
+            end_index = x - 1
         x = x + 1
 
     voltage_subarray = voltage[start_index:end_index]
@@ -75,5 +76,8 @@ def beat_in_interval(times, voltage, end_interval, interval):
 
     time_before_QRS = 0
 
-    for i in times_subarray:
-        if i < times[]
+    return 0
+
+    #
+    #for i in times_subarray:
+    #    if i < times[]
