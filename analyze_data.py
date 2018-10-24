@@ -11,7 +11,7 @@ def create_and_fill_dict(times, voltage):
 
     data_dict["duration"] = find_duration(times)
     data_dict["min max"] = min_max_voltage(voltage)
-    data_dict["beat tiems"] = find_duration(times, voltage)
+    data_dict["beat times"] = find_duration(times, voltage)
     return data_dict
 
 
@@ -38,7 +38,7 @@ def find_beat_times(times, voltage):
     return beat_times
 
 
-def beat_in_interval(times, voltage, end_interval, interval):
+def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     start_interval = end_interval - interval
 
     end_index = max(times)
@@ -51,11 +51,17 @@ def beat_in_interval(times, voltage, end_interval, interval):
             end_index = x
         x = x + 1
 
-    avg_subtracted_voltage = []
-    voltage_subarry = voltage[start_index:end_index]
+    voltage_subarray = voltage[start_index:end_index]
     times_subarray = times[start_index:end_index]
-    subarray_average = sum(voltage_subarry)/len(voltage_subarry)
-    for i in voltage_subarry:
+    return times_subarray, voltage_subarray
+
+def beat_in_interval(times, voltage, end_interval, interval):
+
+    times_subarray, voltage_subarray = extract_voltage_time_arrays(times, voltage, end_interval, interval)
+
+    avg_subtracted_voltage = []
+    subarray_average = sum(voltage_subarray)/len(voltage_subarray)
+    for i in voltage_subarray:
         avg_subtracted_voltage.append(i - subarray_average)
 
     max_voltage = max(avg_subtracted_voltage)
