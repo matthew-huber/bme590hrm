@@ -77,7 +77,7 @@ def beat_in_interval(times, voltage, end_interval, interval):
 
     times_subarray, voltage_subarray = extract_voltage_time_arrays(times, voltage, end_interval, interval)
 
-    
+    normalized_voltage = process_voltage(voltage_subarray)
 
     index_max_val = normalized_voltage.index(1)
 
