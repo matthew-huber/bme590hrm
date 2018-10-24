@@ -11,7 +11,7 @@ def create_and_fill_dict(times, voltage):
 
     data_dict["duration"] = find_duration(times)
     data_dict["min max"] = min_max_voltage(voltage)
-    data_dict["beat tiems"] = find_duration(times, voltage)
+    data_dict["beat times"] = find_duration(times, voltage)
     return data_dict
 
 
@@ -38,24 +38,31 @@ def find_beat_times(times, voltage):
     return beat_times
 
 
-def beat_in_interval(times, voltage, end_interval, interval):
+def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     start_interval = end_interval - interval
 
-    end_index = max(times)
+    end_index = len(times)
 
     x = 1
+    start_index = 0
     for i in times:
-        if i <= start_interval:
+        if i < start_interval:
             start_index = x
-        if i >= end_interval and i < end_index:
-            end_index = x
+        if i > end_interval and x < end_index:
+            end_index = x - 1
         x = x + 1
 
-    avg_subtracted_voltage = []
-    voltage_subarry = voltage[start_index:end_index]
+    voltage_subarray = voltage[start_index:end_index]
     times_subarray = times[start_index:end_index]
-    subarray_average = sum(voltage_subarry)/len(voltage_subarry)
-    for i in voltage_subarry:
+    return times_subarray, voltage_subarray
+
+def beat_in_interval(times, voltage, end_interval, interval):
+
+    times_subarray, voltage_subarray = extract_voltage_time_arrays(times, voltage, end_interval, interval)
+
+    avg_subtracted_voltage = []
+    subarray_average = sum(voltage_subarray)/len(voltage_subarray)
+    for i in voltage_subarray:
         avg_subtracted_voltage.append(i - subarray_average)
 
     max_voltage = max(avg_subtracted_voltage)
@@ -69,5 +76,8 @@ def beat_in_interval(times, voltage, end_interval, interval):
 
     time_before_QRS = 0
 
-    for i in times_subarray:
-        if i < times[]
+    return 0
+
+    #
+    #for i in times_subarray:
+    #    if i < times[]
