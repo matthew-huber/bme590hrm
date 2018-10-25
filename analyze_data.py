@@ -76,6 +76,30 @@ def process_voltage(voltage):
     return normalized_voltage
 
 
+def is_beat_valid(voltages, times, QRS_threshold):
+    cutoff = 0.75
+    index_max_val = voltages.index(1)
+
+    x = 0
+    end_front = 0
+    for i in times:
+        if i <= times[index_max_val]-QRS_threshold/2:
+            end_fromt = x
+        x = x + 1
+
+    start_back = 0
+    for i in times:
+        if i < times[index_max_val]+QRS_threshold/2:
+            start_back = x
+        x = x + 1
+
+    front_voltages = voltages[0:end_fromt]
+    back_voltages = voltages[start_back:len(voltages)]
+    if max(front_voltages) > cutoff or max(back_voltages) > cutoff:
+        return False
+    else:
+        return True
+
 def beat_in_interval(times, voltage, end_interval, interval):
 
     times_subarray, voltage_subarray, start_index = extract_voltage_time_arrays(times, voltage, end_interval, interval)
@@ -86,10 +110,10 @@ def beat_in_interval(times, voltage, end_interval, interval):
 
     QRS_time_region = 0.1
 
-    time_before_QRS = 0
+    beat_valid = is_beat_valid(normalized_voltage, times_subarray, QRS_time_region)
 
-    return 0
-
-    #
-    #for i in times_subarray:
-    #    if i < times[]
+    beat_time = times[index_max_val+start_index]
+    if beat_valid == False:
+        return False
+    else:
+        return beat_time
