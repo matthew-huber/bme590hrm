@@ -41,6 +41,29 @@ def find_beat_times(times, voltage):
     return beat_times
 
 
+def combine_double_beats(times, voltage, beat_times):
+    condensed_beats = []
+    skip = 0
+    for i in range(0, len(beat_times)-1):
+        if skip == 1:
+            skip = 0
+        else:
+            if abs((beat_times[i] - beat_times[i+1])) < 0.5:
+                v1 = voltage[times.index(beat_times[i])]
+                v2 = voltage[times.index(beat_times[i+1])]
+                true_beat = max(v1, v2)
+                if true_beat == v1:
+                    condensed_beats.append(beat_times[i])
+                    skip = 1
+                else:
+                    condensed_beats.append(beat_times[i+1])
+                    skip = 1
+            else:
+                condensed_beats.append(beat_times[i])
+
+    return condensed_beats
+
+
 def extract_voltage_time_arrays(times, voltage, end_interval, interval):
     start_interval = end_interval - interval
 
