@@ -14,8 +14,8 @@ times, voltages = load_csv('./test_data/test_data3.csv')
     (1.001, 0.011, [-0.29, -0.305, -0.3, -0.305]),
 ])
 def test_extract_voltage_time_arrays_voltage(end, interval, expected):
-    time, voltage, index = extract_voltage_time_arrays(times, voltages, end, interval)
-    assert voltage == expected
+    t, v, i = extract_voltage_time_arrays(times, voltages, end, interval)
+    assert v == expected
 
 
 @pytest.mark.parametrize("end,interval,expected", [
@@ -26,8 +26,8 @@ def test_extract_voltage_time_arrays_voltage(end, interval, expected):
     (1.001, 0.011, [0.992, 0.994, 0.997, 1]),
 ])
 def test_extract_voltage_time_arrays_time(end, interval, expected):
-    time, voltage, index = extract_voltage_time_arrays(times, voltages, end, interval)
-    assert time == expected
+    t, v, i = extract_voltage_time_arrays(times, voltages, end, interval)
+    assert t == expected
 
 
 @pytest.mark.parametrize("end,interval,expected", [
@@ -37,5 +37,5 @@ def test_extract_voltage_time_arrays_time(end, interval, expected):
     (1.001, 0.011, 357),
 ])
 def test_extract_voltage_time_arrays_time(end, interval, expected):
-    time, voltage, index = extract_voltage_time_arrays(times, voltages, end, interval)
-    assert index == expected
+    t, v, i = extract_voltage_time_arrays(times, voltages, end, interval)
+    assert i == expected
