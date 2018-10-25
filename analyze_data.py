@@ -55,7 +55,7 @@ def extract_voltage_time_arrays(times, voltage, end_interval, interval):
 
     voltage_subarray = voltage[start_index:end_index]
     times_subarray = times[start_index:end_index]
-    return times_subarray, voltage_subarray
+    return times_subarray, voltage_subarray, start_index
 
 
 def process_voltage(voltage):
@@ -73,9 +73,10 @@ def process_voltage(voltage):
 
     return normalized_voltage
 
+
 def beat_in_interval(times, voltage, end_interval, interval):
 
-    times_subarray, voltage_subarray = extract_voltage_time_arrays(times, voltage, end_interval, interval)
+    times_subarray, voltage_subarray, start_index = extract_voltage_time_arrays(times, voltage, end_interval, interval)
 
     normalized_voltage = process_voltage(voltage_subarray)
 
