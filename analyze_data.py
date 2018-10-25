@@ -77,7 +77,7 @@ def process_voltage(voltage):
 
 
 def is_beat_valid(voltages, times, QRS_threshold):
-    cutoff = 0.5
+    cutoff = 0.25
     index_max_val = voltages.index(1)
 
     x = 0
