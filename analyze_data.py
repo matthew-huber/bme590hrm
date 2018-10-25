@@ -34,7 +34,7 @@ def find_beat_times(times, voltage):
     beat_times = []
     for time in range(interval, max(times), interval/2):
         beat_result = beat_in_interval(times, voltage, time, interval)
-        if beat_result != False:
+        if beat_result is not False:
             beat_times.append(beat_result)
 
     beat_times = combine_double_beats(times, voltage, beat_times)
@@ -106,18 +106,19 @@ def is_beat_valid(voltages, times, QRS_threshold):
 
 def beat_in_interval(times, voltage, end_interval, interval):
 
-    times_subarray, voltage_subarray, start_index = extract_voltage_time_arrays(times, voltage, end_interval, interval)
+    times_subarray, voltage_subarray, start_index = \
+        extract_voltage_time_arrays(times, voltage, end_interval, interval)
 
-    normalized_voltage = process_voltage(voltage_subarray)
+    norm_voltage = process_voltage(voltage_subarray)
 
-    index_max_val = normalized_voltage.index(1)
+    index_max_val = norm_voltage.index(1)
 
     QRS_time_region = 0.1
 
-    beat_valid = is_beat_valid(normalized_voltage, times_subarray, QRS_time_region)
+    beat_valid = is_beat_valid(norm_voltage, times_subarray, QRS_time_region)
 
     beat_time = times[index_max_val+start_index]
-    if beat_valid == False:
+    if beat_valid is False:
         return False
     else:
         return beat_time

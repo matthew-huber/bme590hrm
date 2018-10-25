@@ -12,6 +12,7 @@ time_thru_beat = times[600:750]
 voltage_no_beat = process_voltage(voltages[1025:1175])
 time_no_beat = times[1025:1175]
 
+
 @pytest.mark.parametrize("voltages, times, qrs_threshold, expected", [
     (voltage_thru_beat, time_thru_beat, 0.1, True),
     (voltage_no_beat, time_no_beat, 0.1, False),
