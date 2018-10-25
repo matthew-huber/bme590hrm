@@ -33,7 +33,9 @@ def find_beat_times(times, voltage):
 
     beat_times = []
     for time in range(interval, max(times), interval/2):
-        beat_times.append(beat_in_interval(times, voltage, time, interval))
+        beat_result = beat_in_interval(times, voltage, time, interval)
+        if beat_result != False
+            beat_times.append(beat_result)
 
     beat_times = combine_double_beats(times, voltage, beat_times)
     return beat_times
