@@ -32,12 +32,14 @@ def find_beat_times(times, voltage):
     threshold = 0.75
 
     beat_times = []
-    for time in range(interval, max(times), interval/2):
+    time = interval
+    while time < max(times):
         beat_result = beat_in_interval(times, voltage, time, interval)
         if beat_result is not False:
             beat_times.append(beat_result)
-
+        time = time + interval/2
     beat_times = combine_double_beats(times, voltage, beat_times)
+    print(beat_times)
     return beat_times
 
 
@@ -100,14 +102,14 @@ def process_voltage(voltage):
 
 
 def is_beat_valid(voltages, times, QRS_threshold):
-    cutoff = 0.25
+    cutoff = 0.4
     index_max_val = voltages.index(1)
 
     x = 0
     end_front = 0
     for i in times:
         if i <= times[index_max_val]-QRS_threshold/2:
-            end_fromt = x
+            end_front = x
         x = x + 1
 
     x = 0
@@ -117,8 +119,12 @@ def is_beat_valid(voltages, times, QRS_threshold):
             start_back = x
         x = x + 1
 
-    front_voltages = voltages[0:end_fromt]
+    front_voltages = voltages[0:end_front]
+    if (front_voltages == []):
+        front_voltages = [0]
     back_voltages = voltages[start_back:len(voltages)]
+    if (back_voltages == []):
+        back_voltages = [0]
     max_front = max(front_voltages)
     max_back = max(back_voltages)
     if max_front > cutoff or max_back > cutoff:
