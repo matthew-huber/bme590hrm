@@ -12,7 +12,13 @@ def create_and_fill_dict(times, voltage):
     data_dict["duration"] = find_duration(times)
     data_dict["min max"] = min_max_voltage(voltage)
     data_dict["beat times"] = find_duration(times, voltage)
+    data_dict["num beats"] = total_beats(data_dict["beat times"])
     return data_dict
+
+
+def total_beats(beat_times):
+    num_beats = len(beat_times)
+    return num_beats
 
 
 def find_duration(times):
