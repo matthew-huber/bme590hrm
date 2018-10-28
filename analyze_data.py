@@ -20,13 +20,13 @@ def create_and_fill_dict(times, voltage):
     return data_dict
 
 
-def find_bpm(beat_times, bpm_range=(0, 60)):
-    start = bpm_range(0)
-    stop = bpm_range(1)
+def find_bpm(beat_times, bpm_range=(0, 10)):
+    start = bpm_range[0]
+    stop = bpm_range[1]
 
     beats_in_interval = 0
     for time in beat_times:
-        if time > start & time < stop:
+        if time >= start & time <= stop:
             beats_in_interval = beats_in_interval + 1
 
     interval_minutes = (float(stop) - float(start))/60
