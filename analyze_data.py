@@ -1,24 +1,18 @@
 
 
 def create_and_fill_dict(times, voltage):
+    metrics = {}
 
-    data_dict = {"duration": '',
-                 "bpm": -1,
-                 "beat times": -1,
-                 "min max": -1,
-                 "num beats": -1
-                 }
-
-    data_dict["duration"] = find_duration(times)
-    data_dict["min max"] = min_max_voltage(voltage)
-    data_dict["beat times"] = find_beat_times(times, voltage)
-    data_dict["num beats"] = total_beats(data_dict["beat times"])
+    metrics["duration"] = find_duration(times)
+    metrics["voltage_extremes"] = min_max_voltage(voltage)
+    metrics["beats"] = find_beat_times(times, voltage)
+    metrics["num_beats"] = total_beats(metrics["beat times"])
 
     print("The duration of the ECG data is {} seconds".format(data_dict["duration"]))
     bpm_start = input("Enter the start time over the interval to analyze: ")
     bpm_stop = input("Enter the stop time over the interval to analyze: ")
-    data_dict["bpm"] = find_bpm(data_dict["beat times"], (bpm_start, bpm_stop))
-    return data_dict
+    metrics["mean_hr_bpm"] = find_bpm(metrics["beat times"], (bpm_start, bpm_stop))
+    return metrics
 
 
 def find_bpm(beat_times, bpm_range=(0, 10)):
