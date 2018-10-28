@@ -13,7 +13,25 @@ def create_and_fill_dict(times, voltage):
     data_dict["min max"] = min_max_voltage(voltage)
     data_dict["beat times"] = find_duration(times, voltage)
     data_dict["num beats"] = total_beats(data_dict["beat times"])
+
+    print("The duration of the ECG data is {} seconds".format(data_dict["duration"]))
+    bpm_range = input("Enter a tuple with the range over which you would like the bpm to be calculated: ")
+    data_dict["bpm"] = find_bpm(data_dict["beat times"], bpm_range)
     return data_dict
+
+
+def find_bpm(beat_times, bpm_range=(0, 60)):
+    start = bpm_range(0)
+    stop = bpm_range(1)
+
+    beats_in_interval = 0
+    for time in beat_times:
+        if time > start & time < stop:
+            beats_in_interval = beats_in_interval + 1
+
+    interval_minutes = (float(stop) - float(start))/60
+    bpm = beats_in_interval/interval_minutes
+    return bpm
 
 
 def total_beats(beat_times):
