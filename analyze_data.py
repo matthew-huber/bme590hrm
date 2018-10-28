@@ -26,7 +26,7 @@ def find_bpm(beat_times, bpm_range=(0, 10)):
 
     beats_in_interval = 0
     for time in beat_times:
-        if time >= start & time <= stop:
+        if start <= time <= stop:
             beats_in_interval = beats_in_interval + 1
 
     interval_minutes = (float(stop) - float(start))/60
