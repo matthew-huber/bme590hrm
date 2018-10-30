@@ -193,6 +193,14 @@ def process_voltage(voltage):
 
 
 def is_beat_valid(voltages, times, QRS_threshold):
+    """
+    Determines whether a heartbeat is valid by seeing if it is above the noise
+
+    :param voltages: (list) voltage interval over which to analyze
+    :param times: (list) time interval over which to analyze
+    :param QRS_threshold: length to QRS region to exclude from cutoff
+    :return: boolean indicating whether there is a valid heartbeat
+    """
     cutoff = 0.4
     index_max_val = voltages.index(1)
 
@@ -226,6 +234,15 @@ def is_beat_valid(voltages, times, QRS_threshold):
 
 
 def beat_in_interval(times, voltage, end_interval, interval):
+    """
+    returns time of heart beat in interval, or false if there is none
+
+    :param times: (list) time interval over which to analyze
+    :param voltage: (list) voltage interval over which to analyze
+    :param end_interval: (float) end time of interval to extract
+    :param interval: (float) length of interval to extract
+    :return: time of heartbeat in interval, or false if no heartbeat
+    """
 
     times_subarray, voltage_subarray, start_index = \
         extract_voltage_time_arrays(times, voltage, end_interval, interval)
