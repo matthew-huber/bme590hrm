@@ -56,9 +56,10 @@ def find_beat_times(times, voltage):
         if beat_result is not False:
             beat_times.append(beat_result)
         time = time + interval/2
-    print(beat_times)
+    beat_result = beat_in_interval(times, voltage, max(times), interval)
+    if beat_result is not False:
+        beat_times.append(beat_result)
     beat_times = combine_double_beats(times, voltage, beat_times)
-    print(beat_times)
     return beat_times
 
 
@@ -78,9 +79,6 @@ def combine_double_beats(times, voltage, beat_times):
                 if true_beat == v1:
                     condensed_beats.append(beat_times[i])
                     skip = 1
-                #else:
-                 #   condensed_beats.append(beat_times[i+1])
-                  #  skip = 1
             else:
                 condensed_beats.append(beat_times[i])
 
@@ -164,7 +162,6 @@ def beat_in_interval(times, voltage, end_interval, interval):
     index_max_val = norm_voltage.index(1)
 
     QRS_time_region = 0.1
-
     beat_valid = is_beat_valid(norm_voltage, times_subarray, QRS_time_region)
 
     beat_time = times[index_max_val+start_index]
