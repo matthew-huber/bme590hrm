@@ -1,4 +1,5 @@
 import json
+import logging
 
 
 def convert_to_json(dict_to_convert, csv_file):
@@ -6,6 +7,9 @@ def convert_to_json(dict_to_convert, csv_file):
 
     with open(json_file, 'w') as file:
         json.dump(dict_to_convert, file)
+
+    logging.info('JSON file written with heart rate metrics')
+    return 0
 
 
 def csv_to_json(csv_filename):
