@@ -1,4 +1,5 @@
 from fileReader import load_csv
+from fileReader import amend_missing_data
 from analyze_data import create_and_fill_dict
 from json_conversion import convert_to_json
 
@@ -15,10 +16,13 @@ def main():
 
     file_to_read = input("Input a filename to read: ")
     times, voltages = load_csv(file_to_read)
+
     if times == 1 and voltages == 1:
         print("Error: File not found. Please try again.")
         return 1
     else:
+        times = amend_missing_data(times)
+        voltages = amend_missing_data(voltages)
         metrics = create_and_fill_dict(times, voltages)
 
         convert_to_json(metrics, file_to_read)
