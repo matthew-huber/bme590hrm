@@ -1,17 +1,23 @@
+import logging
 
 
 def create_and_fill_dict(times, voltage):
     metrics = {}
 
     metrics["duration"] = find_duration(times)
+    logging.info('duration added to metrics dictionary')
     metrics["voltage_extremes"] = min_max_voltage(voltage)
+    logging.info('voltage_extremes added to metrics dictionary')
     metrics["beats"] = find_beat_times(times, voltage)
+    logging.info('beats added to metrics dictionary')
     metrics["num_beats"] = total_beats(metrics["beats"])
+    logging.info('num_beats added to metrics dictionary')
 
     print("The ECG duration is {} seconds".format(metrics["duration"]))
     bpm_start = input("Enter the start time over the interval to analyze: ")
     bpm_stop = input("Enter the stop time over the interval to analyze: ")
     metrics["mean_hr_bpm"] = find_bpm(metrics["beats"], (bpm_start, bpm_stop))
+    logging.info('mean_hr_bpm added to metrics dictionary')
     return metrics
 
 
@@ -79,6 +85,7 @@ def combine_double_beats(times, voltage, beat_times):
                 if true_beat == v1:
                     condensed_beats.append(beat_times[i])
                     skip = 1
+                    logging.warning('Double beat detected. Second beat being removed')
             else:
                 condensed_beats.append(beat_times[i])
 
@@ -149,6 +156,7 @@ def is_beat_valid(voltages, times, QRS_threshold):
     if max_front > cutoff or max_back > cutoff:
         return False
     else:
+        logging.info('valid beat detected')
         return True
 
 

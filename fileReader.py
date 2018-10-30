@@ -1,4 +1,5 @@
 import csv
+import logging
 
 
 def load_csv(filename):
@@ -20,15 +21,18 @@ def load_csv(filename):
             try:
                 times.append(float(row[0]))
             except ValueError:
+                logging.warning('Non-numeric time in csv file. NAN written instead')
                 times.append('NAN')
             try:
                 voltage.append(float(row[1]))
             except ValueError:
+                logging.warning('Non-numeric voltage in csv file. NAN written instead')
                 voltage.append('NAN')
 
         return times, voltage
 
     except IOError:
+        logging.error('invalid filename entered')
         return 1, 1
 
 
@@ -37,6 +41,7 @@ def amend_missing_data(raw_array):
     for i in range(0, length_array):
         if raw_array[i] == 'NAN':
             raw_array = interp_missing_data(raw_array, i, 1)
+            logging.info('NAN value in array replaced with interpolated value')
     return raw_array
 
 
