@@ -31,6 +31,7 @@ def load_csv(filename):
     except IOError:
         return 1, 1
 
+
 def amend_missing_data(raw_array):
     length_array = len(raw_array)
     for i in range(0, length_array):
