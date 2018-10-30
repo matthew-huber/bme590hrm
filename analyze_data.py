@@ -2,6 +2,13 @@ import logging
 
 
 def create_and_fill_dict(times, voltage):
+    """
+    calls analyze functions to fill metrics dictionary
+
+    :param times: (list) time array taken from csv file
+    :param voltage: (list) voltage array taken from csv file
+    :return: dictionary metrics with the heart rate analytics
+    """
     metrics = {}
 
     metrics["duration"] = find_duration(times)
@@ -22,6 +29,13 @@ def create_and_fill_dict(times, voltage):
 
 
 def find_bpm(beat_times, bpm_range=(0, 10)):
+    """
+    calculates bpm over user specified (or default 0 to 10 second) range
+
+    :param beat_times: (array) times that heart beats are recorded
+    :param bpm_range: (tuple) start and stop second to calculate heart rate over
+    :return: heart rate in bpm over range
+    """
     start = float(bpm_range[0])
     stop = float(bpm_range[1])
 
