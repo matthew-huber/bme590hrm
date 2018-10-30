@@ -42,6 +42,12 @@ def create_and_fill_dict(times, voltage):
         logging.warning('incorrect datatype in range. Running default time')
 
     logging.info('mean_hr_bpm added to metrics dictionary')
+
+    if 50 < metrics["mean_hr_bpm"] < 200:
+        metrics["mean_hr_bpm"] = "Error calculating BPM: does not fall " \
+                                 "in expected values"
+    logging.warning('heart rate not in realistic range')
+
     return metrics
 
 
