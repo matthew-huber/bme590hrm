@@ -31,7 +31,7 @@ def create_and_fill_dict(times, voltage):
         if float(bpm_stop) > metrics["duration"]:
             bpm_stop = metrics["duration"]
             logging.warning('bpm_stop changed to maximum time')
-        if float(bpm_stop) < float(bpm_stop):
+        if float(bpm_stop) < float(bpm_start):
             metrics["mean_hr_bpm"] = find_bpm(metrics["beats"])
             logging.warning('bpm_start>bpm_start. Running over default time')
         else:
@@ -43,7 +43,7 @@ def create_and_fill_dict(times, voltage):
 
     logging.info('mean_hr_bpm added to metrics dictionary')
 
-    if 50 < metrics["mean_hr_bpm"] < 200:
+    if 50 > metrics["mean_hr_bpm"] or metrics["mean_hr_bpm"] > 200:
         metrics["mean_hr_bpm"] = "Error calculating BPM: does not fall " \
                                  "in expected values"
     logging.warning('heart rate not in realistic range')
@@ -217,7 +217,7 @@ def process_voltage(voltage):
         try:
             normalized_voltage.append(i / max_voltage)
         except ZeroDivisionError:
-            normalized_voltage.append(0)
+            normalized_voltage.append(1)
 
     return normalized_voltage
 
