@@ -47,8 +47,7 @@ def min_max_voltage(voltage):
 
 
 def find_beat_times(times, voltage):
-    interval = 0.5
-    threshold = 0.75
+    interval = 0.3
 
     beat_times = []
     time = interval
@@ -57,6 +56,7 @@ def find_beat_times(times, voltage):
         if beat_result is not False:
             beat_times.append(beat_result)
         time = time + interval/2
+    print(beat_times)
     beat_times = combine_double_beats(times, voltage, beat_times)
     print(beat_times)
     return beat_times
@@ -65,20 +65,22 @@ def find_beat_times(times, voltage):
 def combine_double_beats(times, voltage, beat_times):
     condensed_beats = []
     skip = 0
-    for i in range(0, len(beat_times)-1):
+    for i in range(0, len(beat_times)):
         if skip == 1:
             skip = 0
+        elif i == len(beat_times)-1:
+            condensed_beats.append(beat_times[i])
         else:
-            if abs((beat_times[i] - beat_times[i+1])) < 0.5:
+            if abs((beat_times[i] - beat_times[i+1])) < 0.3:
                 v1 = voltage[times.index(beat_times[i])]
                 v2 = voltage[times.index(beat_times[i+1])]
                 true_beat = max(v1, v2)
                 if true_beat == v1:
                     condensed_beats.append(beat_times[i])
                     skip = 1
-                else:
-                    condensed_beats.append(beat_times[i+1])
-                    skip = 1
+                #else:
+                 #   condensed_beats.append(beat_times[i+1])
+                  #  skip = 1
             else:
                 condensed_beats.append(beat_times[i])
 
