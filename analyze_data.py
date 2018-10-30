@@ -68,7 +68,11 @@ def find_bpm(beat_times, bpm_range=(0, 10)):
             beats_in_interval = beats_in_interval + 1
 
     interval_minutes = (float(stop) - float(start))/60
-    bpm = beats_in_interval/interval_minutes
+    try:
+        bpm = beats_in_interval/interval_minutes
+    except ZeroDivisionError:
+        bpm = 0
+        logging.error('Error in values used to calculate heart rate')
     return bpm
 
 
@@ -210,7 +214,10 @@ def process_voltage(voltage):
 
     normalized_voltage = []
     for i in avg_subtracted_voltage:
-        normalized_voltage.append(i / max_voltage)
+        try:
+            normalized_voltage.append(i / max_voltage)
+        except ZeroDivisionError:
+            normalized_voltage.append(0)
 
     return normalized_voltage
 

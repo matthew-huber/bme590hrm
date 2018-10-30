@@ -4,7 +4,7 @@ import logging
 
 def load_csv(filename):
     """
-    loads data from filename, returning it as a list of times ang voltages
+    loads data from filename, returning it as a list of times and voltages
 
     :param filename: (string) csv file to load
     :return:
