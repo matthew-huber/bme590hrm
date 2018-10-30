@@ -5,7 +5,7 @@ import os
 
 
 @pytest.mark.parametrize("dict, csv_file", [
-    ({"duration": 10, "voltage_extremes": (12, 20)}, './test_data/test_data1.csv'),
+    ({"duration": 10, "voltages": (12, 20)}, './test_data/test_data1.csv'),
 ])
 def test_convert_to_json(dict, csv_file):
     json_file = csv_to_json(csv_file)
