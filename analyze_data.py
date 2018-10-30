@@ -85,7 +85,7 @@ def combine_double_beats(times, voltage, beat_times):
                 if true_beat == v1:
                     condensed_beats.append(beat_times[i])
                     skip = 1
-                    logging.warning('Double beat detected. Second beat being removed')
+                    logging.warning('Second beat of double beat removed')
             else:
                 condensed_beats.append(beat_times[i])
 

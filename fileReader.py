@@ -21,12 +21,12 @@ def load_csv(filename):
             try:
                 times.append(float(row[0]))
             except ValueError:
-                logging.warning('Non-numeric time in csv file. NAN written instead')
+                logging.warning('Non-numeric time in csv file. NAN written')
                 times.append('NAN')
             try:
                 voltage.append(float(row[1]))
             except ValueError:
-                logging.warning('Non-numeric voltage in csv file. NAN written instead')
+                logging.warning('Non-numeric voltage in csv file. NAN written')
                 voltage.append('NAN')
 
         return times, voltage
