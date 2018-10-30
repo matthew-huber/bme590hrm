@@ -14,6 +14,7 @@ def test_find_bpm(beat_times, range, expected):
     beat_times = find_bpm(beat_times, range)
     assert beat_times == pytest.approx(expected)
 
+
 @pytest.mark.parametrize("beat_times, expected", [
     ([0, 10, 20], 12)
 ])

@@ -2,7 +2,7 @@
 import pytest
 
 from analyze_data import find_beat_times
-from  fileReader import load_csv
+from fileReader import load_csv
 
 times, voltages = load_csv('./test_data/test_data1.csv')
 

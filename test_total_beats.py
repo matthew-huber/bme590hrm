@@ -1,6 +1,8 @@
 import pytest
 
 from analyze_data import total_beats
+
+
 @pytest.mark.parametrize("beat_times, expected", [
     ([0.214, 1.028, 1.842, 2.631, 3.419, 4.208, 5.025,
       5.681, 6.675, 7.517, 8.328, 9.119, 9.889, 10.731,
