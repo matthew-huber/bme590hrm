@@ -33,7 +33,7 @@ def find_bpm(beat_times, bpm_range=(0, 10)):
     calculates bpm over user specified (or default 0 to 10 second) range
 
     :param beat_times: (array) times that heart beats are recorded
-    :param bpm_range: (tuple) start and stop second to calculate heart rate over
+    :param bpm_range: (tuple) start and stop second to calculate bpm over
     :return: heart rate in bpm over range
     """
     start = float(bpm_range[0])
@@ -50,16 +50,34 @@ def find_bpm(beat_times, bpm_range=(0, 10)):
 
 
 def total_beats(beat_times):
+    """
+    Finds the total number of beats in the ECG trace
+
+    :param beat_times: (list) array of beat times
+    :return: integer number of beats in beat_times
+    """
     num_beats = len(beat_times)
     return num_beats
 
 
 def find_duration(times):
+    """
+    find the duration of the ECG trace
+
+    :param times: (list) array of times
+    :return: the maximum time in the time array
+    """
     max_time = max(times)
     return max_time
 
 
 def min_max_voltage(voltage):
+    """
+    outputs the minimum and maximum voltage recorded
+
+    :param voltage: (list) array of voltages
+    :return: tuple of the minimum and maximum voltages
+    """
     min_voltage = min(voltage)
     max_voltage = max(voltage)
     min_max_voltages = (min_voltage, max_voltage)
@@ -67,6 +85,13 @@ def min_max_voltage(voltage):
 
 
 def find_beat_times(times, voltage):
+    """
+    list of times in the ECG where a heartbeat is detected
+
+    :param times: (list) array of all ECG times
+    :param voltage: (list) array of all ECG voltages
+    :return: list of times where a beat is observed
+    """
     interval = 0.3
 
     beat_times = []
@@ -84,6 +109,14 @@ def find_beat_times(times, voltage):
 
 
 def combine_double_beats(times, voltage, beat_times):
+    """
+    Combines beats that are close in time to the higher voltage of those beats
+
+    :param times: (list) array of all ECG times
+    :param voltage: (list) array of all ECG voltages
+    :param beat_times: (list) array of times where a beat is observed
+    :return: array of times beat occurs, without doubly detected beats
+    """
     condensed_beats = []
     skip = 0
     for i in range(0, len(beat_times)):
@@ -107,6 +140,18 @@ def combine_double_beats(times, voltage, beat_times):
 
 
 def extract_voltage_time_arrays(times, voltage, end_interval, interval):
+    """
+    extracts smaller voltage and time arrays from entire data for analysis
+
+    :param times: (list) array of all ECG times
+    :param voltage: (list) array of all ECG voltages
+    :param end_interval: (float) end time of interval to extract
+    :param interval: (float) length of interval to extract
+    :return:
+        times_subarray: array of times in interval
+        voltage_subarray: array of voltages in interval
+        start_index: index in times array that is start of the subarrays
+    """
     start_interval = end_interval - interval
 
     end_index = len(times)
@@ -126,6 +171,12 @@ def extract_voltage_time_arrays(times, voltage, end_interval, interval):
 
 
 def process_voltage(voltage):
+    """
+    process voltage array by subtracting average and dividing by maximum
+
+    :param voltage: (list) array of voltages to process
+    :return: processed voltage list
+    """
     array_average = sum(voltage) / len(voltage)
 
     avg_subtracted_voltage = []
