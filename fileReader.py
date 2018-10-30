@@ -9,24 +9,27 @@ def load_csv(filename):
     :return: two columns
     """
 
-    with open(filename, 'r') as dest_f:
-        data_iter = csv.reader(dest_f, delimiter=',')
-        data = [data for data in data_iter]
+    try:
+        with open(filename, 'r') as dest_f:
+            data_iter = csv.reader(dest_f, delimiter=',')
+            data = [data for data in data_iter]
 
-    times = []
-    voltage = []
-    for row in data:
-        try:
-            times.append(float(row[0]))
-        except ValueError:
-            times.append('NAN')
-        try:
-            voltage.append(float(row[1]))
-        except ValueError:
-            voltage.append('NAN')
+        times = []
+        voltage = []
+        for row in data:
+            try:
+                times.append(float(row[0]))
+            except ValueError:
+                times.append('NAN')
+            try:
+                voltage.append(float(row[1]))
+            except ValueError:
+                voltage.append('NAN')
 
-    return times, voltage
+        return times, voltage
 
+    except IOError:
+        return 1, 1
 
 def amend_missing_data(raw_array):
     length_array = len(raw_array)
