@@ -23,7 +23,24 @@ def create_and_fill_dict(times, voltage):
     print("The ECG duration is {} seconds".format(metrics["duration"]))
     bpm_start = input("Enter the start time over the interval to analyze: ")
     bpm_stop = input("Enter the stop time over the interval to analyze: ")
-    metrics["mean_hr_bpm"] = find_bpm(metrics["beats"], (bpm_start, bpm_stop))
+
+    try:
+        if float(bpm_start) < 0:
+            bpm_start = 0
+            logging.warning('bpm_start changed to 0')
+        if float(bpm_stop) > metrics["duration"]:
+            bpm_stop = metrics["duration"]
+            logging.warning('bpm_stop changed to maximum time')
+        if float(bpm_stop) < float(bpm_stop):
+            metrics["mean_hr_bpm"] = find_bpm(metrics["beats"])
+            logging.warning('bpm_start>bpm_start. Running over default time')
+        else:
+            metrics["mean_hr_bpm"] = find_bpm(metrics["beats"],
+                                              (bpm_start, bpm_stop))
+    except:
+        metrics["mean_hr_bpm"] = find_bpm(metrics["beats"])
+        logging.warning('incorrect datatype in range. Running default time')
+
     logging.info('mean_hr_bpm added to metrics dictionary')
     return metrics
 
